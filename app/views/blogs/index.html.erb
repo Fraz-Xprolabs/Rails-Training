@@ -1,0 +1,9 @@
+<h1>My Blog App</h1>
+<div class="blog-container">
+  <% @blogs.each do |blog| %>
+    <div>
+      <h2 class="blog-title"><%= blog.title %></h2>
+      <p><%= blog.content %></p>
+    </div>
+  <% end %>
+</div>
