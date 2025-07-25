@@ -1,14 +1,11 @@
 class BlogsController < ApplicationController
-  before_action :set_blog, only: [:show, :edit, :update, :destroy]
+  before_action :set_blog, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @blogs = Blog.all
-    puts "DEBUG: Blogs count => #{@blogs.count}"
   end
 
-
-  def show
-  end
+  def show; end
 
   def new
     @blog = Blog.new
@@ -23,8 +20,7 @@ class BlogsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit;end
 
   def update
     if @blog.update(blog_params)
@@ -43,6 +39,10 @@ class BlogsController < ApplicationController
 
   def set_blog
     @blog = Blog.find(params[:id])
+  end
+
+  def find_all
+    @blogs = Blog.all.count
   end
 
   def blog_params
