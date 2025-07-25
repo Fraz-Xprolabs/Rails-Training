@@ -8,10 +8,10 @@ development:
   <<: *default
   database: blog_app_development
   username: fraz
-  password: frazxprolabs2025
+  password: secret123
 
 test:
   <<: *default
   database: blog_app_test
   username: fraz
-  password: frazxprolabs2025
+  password: secret123
