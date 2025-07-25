@@ -20,7 +20,7 @@ class BlogsController < ApplicationController
     end
   end
 
-  def edit;end
+  def edit; end
 
   def update
     if @blog.update(blog_params)
