@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_31_142954) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_01_125354) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "animals", force: :cascade do |t|
+    t.string "name"
+    t.string "species"
+    t.integer "age"
+    t.float "weight"
+    t.string "gender"
+    t.boolean "endangered"
+    t.string "habitat"
+    t.string "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "notes"
+  end
 
   create_table "articles", force: :cascade do |t|
     t.text "title"
@@ -47,7 +61,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_142954) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "views", default: 0
     t.boolean "published"
     t.index ["title"], name: "index_posts_on_title"
     t.check_constraint "char_length(title) > 3", name: "title_length_check"
