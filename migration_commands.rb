@@ -24,22 +24,8 @@ rails generate migration RemovePriorityFromTags priority:integer
 # Adding association bw tags and posts
 rails generate migration AddPostRefToTags post:references
 
-# Updating hte migration by cutom name to id
-class CreateTags < ActiveRecord::Migration[8.0]
-  def change
-    create_table :tags, primary_key: "tag_id" do |t|
-      t.string :name
-      t.string :color
-
-      t.timestamps
-    end
-  end
-end
-
-
 # Adding views and published columns to posts
 rails generate migration AddViewsAndPublishedToPosts views:integer published:boolean
-
 
 # Rollong back 6 migrations
 rails db:rollback STEP=6
@@ -98,14 +84,3 @@ rename_table :blogs, :articles
 
 # DROPPING TABLE
 drop_table :blogs
-
-# Up and Down Functions
-class RemoveViewsFromPosts < ActiveRecord::Migration[8.0]
-  def up
-    remove_column :posts, :views
-  end
-
-  def down
-    add_column :posts, :views, :integer
-  end
-end
