@@ -10,15 +10,72 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_24_122031) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_01_125354) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "blogs", force: :cascade do |t|
-    t.string "title"
+  create_table "animals", force: :cascade do |t|
+    t.string "name"
+    t.string "species"
+    t.integer "age"
+    t.float "weight"
+    t.string "gender"
+    t.boolean "endangered"
+    t.string "habitat"
+    t.string "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "notes"
+  end
+
+  create_table "articles", force: :cascade do |t|
+    t.text "title"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.text "details", null: false
+  end
+
+  create_table "categories_posts", id: false, force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_categories_posts_on_category_id"
+    t.index ["post_id"], name: "index_categories_posts_on_post_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "name"
+    t.text "content"
+    t.string "liked"
+    t.integer "no_of_replies"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.text "title"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "published"
+    t.index ["title"], name: "index_posts_on_title"
+    t.check_constraint "char_length(title) > 3", name: "title_length_check"
+  end
+
+  create_table "tags", primary_key: "tag_id", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 end
