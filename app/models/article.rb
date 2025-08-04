@@ -1,6 +1,6 @@
 class Article < ApplicationRecord
-  before_validation :capitalize_title if: :title_needs_capitalization?
-  after_validation :log_validation unless -> title.blank?
+  # before_validation :capitalize_title, if: :title_needs_capitalization?
+  # after_validation :log_validation, unless -> {title.blank?}
 
   before_save :set_default_content
   after_save :log_saved
