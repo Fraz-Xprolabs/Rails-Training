@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_01_125354) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_05_142210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "account_histories", force: :cascade do |t|
+    t.string "status"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_histories_on_account_id"
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "number"
+    t.bigint "supplier_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["supplier_id"], name: "index_accounts_on_supplier_id"
+  end
 
   create_table "animals", force: :cascade do |t|
     t.string "name"
@@ -54,6 +70,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_01_125354) do
     t.integer "no_of_replies"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "post_id", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "courses_students", id: false, force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "course_id", null: false
   end
 
   create_table "posts", force: :cascade do |t|
@@ -64,6 +94,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_01_125354) do
     t.boolean "published"
     t.index ["title"], name: "index_posts_on_title"
     t.check_constraint "char_length(title) > 3", name: "title_length_check"
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.string "name"
+    t.integer "age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tags", primary_key: "tag_id", force: :cascade do |t|
@@ -78,4 +121,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_01_125354) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "account_histories", "accounts"
+  add_foreign_key "accounts", "suppliers"
+  add_foreign_key "comments", "posts"
 end
