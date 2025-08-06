@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_05_142210) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_06_092413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -28,6 +28,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_05_142210) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["supplier_id"], name: "index_accounts_on_supplier_id"
+  end
+
+  create_table "activity_logs", force: :cascade do |t|
+    t.string "action"
+    t.string "trackable_type", null: false
+    t.bigint "trackable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trackable_type", "trackable_id"], name: "index_activity_logs_on_trackable"
   end
 
   create_table "animals", force: :cascade do |t|
@@ -86,6 +95,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_05_142210) do
     t.bigint "course_id", null: false
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.string "order_number"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "title"
     t.text "content"
@@ -94,6 +110,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_05_142210) do
     t.boolean "published"
     t.index ["title"], name: "index_posts_on_title"
     t.check_constraint "char_length(title) > 3", name: "title_length_check"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "students", force: :cascade do |t|
@@ -118,6 +141,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_05_142210) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.string "name"
+    t.integer "wheels"
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
